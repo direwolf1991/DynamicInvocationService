@@ -44,7 +44,8 @@ public class DynamicInvocationServiceSkeleton implements
 		OMElement inputElement = this.String2Axiom(serviceName, operationName,parameterList);
 		ServiceClient sender;
 		sender = new ServiceClient();
-		String url = "http://192.168.5.248:8080/axis/services/SumService2";// CXF
+		String url = "http://192.168.5.248:8080/axis/services/SumService2";// 以后需要根据servicename来获取url;
+		
 		Options options = new Options();
 		EndpointReference targetEPR = new EndpointReference(url);
 		options.setTo(targetEPR);
@@ -67,10 +68,10 @@ public class DynamicInvocationServiceSkeleton implements
 		 */
 	}
 	
-    public OMElement String2Axiom(String input,String operationName,String [] parameterName) {// 单元测试的时候不能有返回值，也不能申明为static
+    public OMElement String2Axiom(String serviceName,String operationName,String [] parameterList) {// 单元测试的时候不能有返回值，也不能申明为static
 		InputStream xmlFile = null;
 		// dxmlFile = new FileInputStream("output.xml");// 得放在工程的目录下；作为输入源
-		xmlFile = new ByteArrayInputStream(input.getBytes());
+		xmlFile = new ByteArrayInputStream(serviceName.getBytes());
 		XMLStreamReader parser = null;
 		try {
 			parser = XMLInputFactory.newInstance().createXMLStreamReader(
@@ -93,7 +94,7 @@ public class DynamicInvocationServiceSkeleton implements
 		while (it_doc.hasNext()) {
 			OMElement first = it_doc.next();
 			//first.setLocalName("createInput");
-			first.setLocalName(parameterName);
+			first.setLocalName(parameterList);
 		}
 		System.out.println(doc);
 		return doc;

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 (http://www.altova.com) by  () -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:dis="http://DynamicInvokeService.ws.zc:8080/axis/services/DynamicInvokeService/" xmlns:gm="http://www.ws.zc/xml-namespace/informationModel/zcGenericModel" xmlns:cdt="http://www.ws.zc/xml-namespace/informationModel/zcCommonDataTypes" targetNamespace="http://DynamicInvokeService.ws.zc:8080/axis/services/DynamicInvokeService/">
+	<types>
+		<xs:schema elementFormDefault="unqualified" attributeFormDefault="unqualified" targetNamespace="http://DynamicInvokeService.ws.zc:8080/axis/services/DynamicInvokeService/">
+			<xs:complexType name="FaultType">
+				<xs:sequence>
+					<xs:element name="serviceName" type="xs:string"/>
+					<xs:element name="operationName" type="xs:string"/>
+					<xs:element name="exceptionReason" type="xs:string"/>
+					<xs:element name="exceptionCode" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ParameterType">
+				<xs:sequence>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="value" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ParameterListType">
+				<xs:sequence>
+					<xs:element name="parameter" type="dis:ParameterType" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ResultListType">
+				<xs:sequence>
+					<xs:element name="result" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ExceptionListType">
+				<xs:sequence>
+					<xs:element name="exception" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="getDynamicInvokeRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="serviceName" type="xs:string"/>
+						<xs:element name="operationName" type="xs:string"/>
+						<xs:element name="parameterList" type="dis:ParameterListType" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getDynamicInvokeResponse">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="resultList" type="dis:ResultListType" minOccurs="0"/>
+						<xs:element name="exceptionList" type="dis:ExceptionListType" minOccurs="0"/>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getDynamicInvokeFault">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="faultName" type="dis:FaultType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+	</types>
+	<message name="getDynamicInvokeRequest">
+		<part name="request" element="dis:getDynamicInvokeRequest"/>
+	</message>
+	<message name="getDynamicInvokeResponse">
+		<part name="response" element="dis:getDynamicInvokeResponse"/>
+	</message>
+	<message name="getDynamicInvokeFault">
+		<part name="userFault" element="dis:getDynamicInvokeFault"/>
+	</message>
+	<portType name="DynamicInvokePT">
+		<operation name="getDynamicInvoke">
+			<input message="dis:getDynamicInvokeRequest"/>
+			<output message="dis:getDynamicInvokeResponse"/>
+			<fault name="userFault" message="dis:getDynamicInvokeFault"/>
+		</operation>
+	</portType>
+	<binding name="DynamicInvokeBD" type="dis:DynamicInvokePT">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="getDynamicInvoke">
+			<soap:operation soapAction="urn:#getDynamicInvoke"/>
+			<input>
+				<soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DynamicInvokeService.ws.zc:8080/axis/services/DynamicInvokeService"/>
+			</input>
+			<output>
+				<soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://DynamicInvokeService.ws.zc:8080/axis/services/DynamicInvokeService"/>
+			</output>
+			<fault name="userFault">
+				<soap:fault name="userFault" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding" namespace="http://DynamicInvokeService.ws.zc:8080/axis/services/DynamicInvokeService"/>
+			</fault>
+		</operation>
+	</binding>
+	<service name="DynamicInvokeService">
+		<port name="DynamicInvokeService" binding="dis:DynamicInvokeBD">
+			<soap:address location="http://DynamicInvokeService.ws.zc:8080/axis/services/DynamicInvokeService"/>
+		</port>
+	</service>
+</definitions>
